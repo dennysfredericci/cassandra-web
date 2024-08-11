@@ -579,6 +579,7 @@ func (h *Handler) Describe(c echo.Context) error {
 	}
 
 	cmd := exec.Command("cqlsh", cmdSlice...)
+	cmd.Env = append(os.Environ(), "PYTHONIOENCODING=utf-8")
 	out, err := cmd.CombinedOutput()
 
 	if err != nil {
