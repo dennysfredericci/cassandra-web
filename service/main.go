@@ -2,8 +2,10 @@ package main
 
 import (
 	"bytes"
+	"crypto/subtle"
 	"encoding/json"
 	"fmt"
+	"github.com/labstack/echo/middleware"
 	"io/ioutil"
 	"math/rand"
 	"net/http"
@@ -19,7 +21,6 @@ import (
 	"github.com/gocql/gocql"
 	jsoniter "github.com/json-iterator/go"
 	"github.com/labstack/echo"
-	// "github.com/labstack/echo/middleware"
 	"github.com/labstack/gommon/log"
 	"github.com/spf13/viper"
 	"github.com/tidwall/gjson"
@@ -156,6 +157,17 @@ func run(c *cli.Context) {
 	// 	AllowOrigins: []string{"http://localhost:8083", "http://localhost:8084"},
 	// 	AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	// }))
+
+	e.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
+		// Be careful to use constant time comparison to prevent timing attacks
+		if subtle.ConstantTimeCompare([]byte(username), []byte("joe")) == 1 &&
+			subtle.ConstantTimeCompare([]byte(password), []byte("secret")) == 1 {
+			return true, nil
+		}
+		return false, nil
+	}))
+
+	e.Use(middleware.BasicAuthWithConfig(middleware.BasicAuthConfig{}))
 
 	// 讀靜態檔(前端)
 	e.Static(env.AppPath+"/static", "client/dist/static")

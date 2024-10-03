@@ -1,7 +1,7 @@
 # build client stage
 FROM ipushc/golangxnode:1.20.2-v16.15.1 AS build-client-env
 
-RUN cd /go/src/ && git clone https://github.com/orzhaha/cassandra-web.git --depth=1
+RUN cd /go/src/ && git clone https://github.com/dennysfredericci/cassandra-web.git --depth=1
 
 RUN cd /go/src/cassandra-web/client && npm i --force && npm run build
 
@@ -10,7 +10,7 @@ FROM golang:1.20.2-alpine AS build-server-env
 
 RUN apk add --no-cache git
 
-RUN cd /go/src/ && git clone https://github.com/orzhaha/cassandra-web.git
+RUN cd /go/src/ && git clone https://github.com/dennysfredericci/cassandra-web.git
 
 ENV GO111MODULE=on
 
