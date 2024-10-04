@@ -69,15 +69,15 @@ var env envStruct
 
 // envStruct type
 type envStruct struct {
-	HostPort              string `mapstructure:"HOST_PORT" json:"HOST_PORT"`
-	ReadOnly              bool   `mapstructure:"READ_ONLY" json:"READ_ONLY"`
-	CassandraHost         string `mapstructure:"CASSANDRA_HOST" json:"CASSANDRA_HOST"`
-	CassandraPort         int    `mapstructure:"CASSANDRA_PORT" json:"CASSANDRA_PORT"`
-	CassandraUsername     string `mapstructure:"CASSANDRA_USERNAME" json:"CASSANDRA_USERNAME"`
-	CassandraPassword     string `mapstructure:"CASSANDRA_PASSWORD" json:"CASSANDRA_PASSWORD"`
-	AppPath               string `mapstructure:"APP_PATH" json:"APP_PATH"`
-	basicHttpAuthUser     string `mapstructure:"BASIC_HTTP_AUTH_USER" json:"BASIC_HTTP_AUTH_USER"`
-	basicHttpAuthPassword string `mapstructure:"BASIC_HTTP_AUTH_PASSWORD" json:"BASIC_HTTP_AUTH_PASSWORD"`
+	HostPort              string `mapstructure:"HOST_PORT" json:"HOST_PORT" :"host_port"`
+	ReadOnly              bool   `mapstructure:"READ_ONLY" json:"READ_ONLY" :"read_only"`
+	CassandraHost         string `mapstructure:"CASSANDRA_HOST" json:"CASSANDRA_HOST" :"cassandra_host"`
+	CassandraPort         int    `mapstructure:"CASSANDRA_PORT" json:"CASSANDRA_PORT" :"cassandra_port"`
+	CassandraUsername     string `mapstructure:"CASSANDRA_USERNAME" json:"CASSANDRA_USERNAME" :"cassandra_username"`
+	CassandraPassword     string `mapstructure:"CASSANDRA_PASSWORD" json:"CASSANDRA_PASSWORD" :"cassandra_password"`
+	AppPath               string `mapstructure:"APP_PATH" json:"APP_PATH" :"app_path"`
+	BasicHttpAuthUser     string `mapstructure:"BASIC_HTTP_AUTH_USER" json:"BASIC_HTTP_AUTH_USER" :"basic_http_auth_user"`
+	BasicHttpAuthPassword string `mapstructure:"BASIC_HTTP_AUTH_PASSWORD" json:"BASIC_HTTP_AUTH_PASSWORD" :"basic_http_auth_password"`
 }
 
 func main() {
@@ -103,6 +103,7 @@ func main() {
 
 // run
 func run(c *cli.Context) {
+
 	viper.SetConfigFile(c.String("config"))
 	viper.AutomaticEnv()
 
@@ -160,15 +161,15 @@ func run(c *cli.Context) {
 	// 	AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	// }))
 
-	log.Infof("Configured Username: %s, Password: %s", env.basicHttpAuthUser, env.basicHttpAuthPassword)
+	log.Infof("Configured Username: %s, Password: %s", env.BasicHttpAuthUser, env.BasicHttpAuthPassword)
 
 	e.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
 
 		log.Infof("Trying Username: %s, Password: %s", username, password)
 
 		// Be careful to use constant time comparison to prevent timing attacks
-		if subtle.ConstantTimeCompare([]byte(username), []byte(env.basicHttpAuthUser)) == 1 &&
-			subtle.ConstantTimeCompare([]byte(password), []byte(env.basicHttpAuthPassword)) == 1 {
+		if subtle.ConstantTimeCompare([]byte(username), []byte(env.BasicHttpAuthUser)) == 1 &&
+			subtle.ConstantTimeCompare([]byte(password), []byte(env.BasicHttpAuthPassword)) == 1 {
 			return true, nil
 		}
 		return false, nil
