@@ -1,5 +1,9 @@
 # cassandra-web
 
+This is a fork from https://github.com/orzhaha/cassandra-web  and i have included only a basic authentication to the web interface.
+
+I don't aim to support this project, use it at your own risk.
+
 [![latest-tag](https://badgen.net/github/release/orzhaha/cassandra-web)](https://github.com/orzhaha/cassandra-web/releases)
 
 
@@ -73,6 +77,10 @@ docker pull ipushc/cassandra-web
 * CASSANDRA_USERNAME: username
 * CASSANDRA_PASSWORD: password
 * APP_PATH: path
+* BASIC_HTTP_AUTH_USER: user
+* BASIC_HTTP_AUTH_PASSWORD: password
+
+```sh
 
 ---
 

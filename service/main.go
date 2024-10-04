@@ -69,13 +69,15 @@ var env envStruct
 
 // envStruct type
 type envStruct struct {
-	HostPort          string `mapstructure:"HOST_PORT" json:"HOST_PORT"`
-	ReadOnly          bool   `mapstructure:"READ_ONLY" json:"READ_ONLY"`
-	CassandraHost     string `mapstructure:"CASSANDRA_HOST" json:"CASSANDRA_HOST"`
-	CassandraPort     int    `mapstructure:"CASSANDRA_PORT" json:"CASSANDRA_PORT"`
-	CassandraUsername string `mapstructure:"CASSANDRA_USERNAME" json:"CASSANDRA_USERNAME"`
-	CassandraPassword string `mapstructure:"CASSANDRA_PASSWORD" json:"CASSANDRA_PASSWORD"`
-	AppPath           string `mapstructure:"APP_PATH" json:"APP_PATH"`
+	HostPort              string `mapstructure:"HOST_PORT" json:"HOST_PORT"`
+	ReadOnly              bool   `mapstructure:"READ_ONLY" json:"READ_ONLY"`
+	CassandraHost         string `mapstructure:"CASSANDRA_HOST" json:"CASSANDRA_HOST"`
+	CassandraPort         int    `mapstructure:"CASSANDRA_PORT" json:"CASSANDRA_PORT"`
+	CassandraUsername     string `mapstructure:"CASSANDRA_USERNAME" json:"CASSANDRA_USERNAME"`
+	CassandraPassword     string `mapstructure:"CASSANDRA_PASSWORD" json:"CASSANDRA_PASSWORD"`
+	AppPath               string `mapstructure:"APP_PATH" json:"APP_PATH"`
+	basicHttpAuthUser     string `mapstructure:"BASIC_HTTP_AUTH_USER" json:"BASIC_HTTP_AUTH_USER"`
+	basicHttpAuthPassword string `mapstructure:"BASIC_HTTP_AUTH_PASSWORD" json:"BASIC_HTTP_AUTH_PASSWORD"`
 }
 
 func main() {
@@ -160,8 +162,8 @@ func run(c *cli.Context) {
 
 	e.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
 		// Be careful to use constant time comparison to prevent timing attacks
-		if subtle.ConstantTimeCompare([]byte(username), []byte("joe")) == 1 &&
-			subtle.ConstantTimeCompare([]byte(password), []byte("secret")) == 1 {
+		if subtle.ConstantTimeCompare([]byte(username), []byte(env.basicHttpAuthUser)) == 1 &&
+			subtle.ConstantTimeCompare([]byte(password), []byte(env.basicHttpAuthPassword)) == 1 {
 			return true, nil
 		}
 		return false, nil
