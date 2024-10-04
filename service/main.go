@@ -167,7 +167,7 @@ func run(c *cli.Context) {
 		return false, nil
 	}))
 
-	e.Use(middleware.BasicAuthWithConfig(middleware.BasicAuthConfig{}))
+	//e.Use(middleware.BasicAuthWithConfig(middleware.BasicAuthConfig{}))
 
 	// 讀靜態檔(前端)
 	e.Static(env.AppPath+"/static", "client/dist/static")
