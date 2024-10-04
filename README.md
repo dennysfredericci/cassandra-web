@@ -1,8 +1,28 @@
-# cassandra-web
+# Cassandra-Web
 
 This is a fork from https://github.com/orzhaha/cassandra-web  and i have included only a basic authentication to the web interface.
 
 I don't aim to support this project, use it at your own risk.
+
+## How to Build
+
+### Service
+
+```sh
+go build -mod vendor
+```
+### Docker Image
+
+* Code must be pushed to the repository before building the image.
+
+```sh
+docker build --no-cache -t fredericci/cassandra-web:latest .
+```
+* Push the image to the repository.
+
+```sh
+docker push fredericci/interview-assistant-web:latest
+```
 
 [![latest-tag](https://badgen.net/github/release/orzhaha/cassandra-web)](https://github.com/orzhaha/cassandra-web/releases)
 
