@@ -21,7 +21,7 @@ docker build --no-cache -t fredericci/cassandra-web:latest .
 * Push the image to the repository.
 
 ```sh
-docker push fredericci/interview-assistant-web:latest
+docker push fredericci/cassandra-web:latest
 ```
 
 [![latest-tag](https://badgen.net/github/release/orzhaha/cassandra-web)](https://github.com/orzhaha/cassandra-web/releases)
