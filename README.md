@@ -2,7 +2,7 @@
 
 This is a fork from https://github.com/orzhaha/cassandra-web  and i have included only a basic authentication to the web interface.
 
-I don't aim to support this project, use it at your own risk.
+I don't aim to improve or support this project, use it at your own risk.
 
 ## How to Build
 
