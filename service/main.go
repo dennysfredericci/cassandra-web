@@ -161,11 +161,7 @@ func run(c *cli.Context) {
 	// 	AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	// }))
 
-	log.Infof("Configured Username: %s, Password: %s", env.BasicHttpAuthUser, env.BasicHttpAuthPassword)
-
 	e.Use(middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
-
-		log.Infof("Trying Username: %s, Password: %s", username, password)
 
 		// Be careful to use constant time comparison to prevent timing attacks
 		if subtle.ConstantTimeCompare([]byte(username), []byte(env.BasicHttpAuthUser)) == 1 &&
